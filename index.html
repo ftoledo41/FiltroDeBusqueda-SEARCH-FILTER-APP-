@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proyecto Search Filter app</title>
+    <!-- Normalizar estilos -->
+    <link rel="stylesheet" href="css/normalize.css" />
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="css/styles.css" />
+    <!-- Fuentes -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato|Roboto"
+      rel="stylesheet"
+    />
+    <!-- Icon fonts -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+  </head>
+  <body>
+    <section>
+      <h1>Buscador de propiedades inmobiliarias</h1>
+      <div class="container">
+        <div class="filter-container">
+          <div class="filters">
+            <h2>Filtros de Búsqueda</h2>
+
+            <div class="tipo-inmuebles">
+              <label for="tipo-inmueble">Tipo de Inmueble:</label>
+              <select id="tipo-inmueble">
+                <option value="">Todos</option>
+                <option value="apartamento">Apartamentos</option>
+                <option value="casa">Casas</option>
+                <option value="edificio">Edificios</option>
+                <option value="local">Locales</option>
+                <option value="terreno">Terrenos</option>
+              </select>
+            </div>
+
+            <div class="tipo-de-operacion">
+              <label for="tipo-operacion">Tipo de operación:</label>
+              <select id="tipo-operacion">
+                <option value="">Todas</option>
+                <option value="comprar">Comprar</option>
+                <option value="rentar">Rentar</option>
+              </select>
+            </div>
+
+            <div class="rango-precios">
+              <label id="precio">Rango de precios:</label>
+
+              <div class="comprar">
+                <select id="precio-desde-comprar">
+                  <option value="">Precio desde</option>
+                  <option value="0">US$0</option>
+                  <option value="100000">US$100,000</option>
+                  <option value="200000">US$200,000</option>
+                  <option value="300000">US$300,000</option>
+                  <option value="400000">US$400,000</option>
+                  <option value="500000">US$500,000</option>
+                  <option value="600000">US$600,000</option>
+                  <option value="700000">US$700,000</option>
+                  <option value="800000">US$800,000</option>
+                  <option value="900000">US$900,000</option>
+                  <option value="1200000">US$1,200,000</option>
+                  <option value="1400000">US$1,400,000</option>
+                  <option value="1600000">US$1,600,000</option>
+                </select>
+
+                <select id="precio-hasta-comprar">
+                  <option value="">Precio hasta</option>
+                  <option value="400000">US$400,000</option>
+                  <option value="800000">US$800,000</option>
+                  <option value="1000000">US$1,000,000</option>
+                  <option value="2000000">US$1,200,000</option>
+                  <option value="1400000">US$1,400,000</option>
+                  <option value="1600000">US$1,600,000</option>
+                  <option value="2000000">US$2,000,000</option>
+                  <option value="2400000">US$2,400,000</option>
+                  <option value="2800000">US$2,800,000</option>
+                  <option value="9999999999">US$3,000,000+</option>
+                </select>
+              </div>
+
+              <div class="rentar">
+                <select id="precio-desde-rentar" disabled>
+                  <option value="">Precio desde</option>
+                  <option value="500">US$500</option>
+                  <option value="1500">US$1,500</option>
+                  <option value="2500">US$2,500</option>
+                  <option value="3500">US$3,500</option>
+                  <option value="4500">US$4,500</option>
+                  <option value="5500">US$5,500</option>
+                  <option value="6500">US$6,500</option>
+                  <option value="7500">US$7,500</option>
+                  <option value="8500">US$8,500</option>
+                  <option value="9500">US$9,500</option>
+                  <option value="10000">US$10,000</option>
+                </select>
+
+                <select id="precio-hasta-rentar" disabled>
+                  <option value="">Precio hasta</option>
+                  <option value="500">US$500</option>
+                  <option value="1500">US$1,500</option>
+                  <option value="2500">US$2,500</option>
+                  <option value="3500">US$3,500</option>
+                  <option value="4500">US$4,500</option>
+                  <option value="5500">US$5,500</option>
+                  <option value="6500">US$6,500</option>
+                  <option value="7500">US$7,500</option>
+                  <option value="8500">US$8,500</option>
+                  <option value="9500">US$9,500</option>
+                  <option value="9999999999">US$10,000+</option>
+                </select>
+              </div>
+            </div>
+
+            <button id="buscar-btn">
+              <i class="fa-brands fa-searchengin"></i> Buscar
+            </button>
+            <button id="borrar-btn">
+              <i class="fa-solid fa-eraser"></i> Borrar búsqueda
+            </button>
+          </div>
+        </div>
+        <div class="properties-container">
+          <!-- Aquí se mostrarán las propiedades -->
+        </div>
+      </div>
+    </section>
+    <!-- 244. Mostrar propiedades por defecto -->
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>

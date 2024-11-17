@@ -1,0 +1,118 @@
+// SEARCH FILTER APP
+
+import properties from "./datos.js";
+
+const propertyTypeSelect = document.querySelector("#tipo-inmueble");
+const operationTypeSelect = document.querySelector("#tipo-operacion");
+const minPriceBuySelect = document.querySelector("#precio-desde-comprar");
+const maxPriceBuySelect = document.querySelector("#precio-hasta-comprar");
+const minPriceRentSelect = document.querySelector("#precio-desde-rentar");
+const maxPriceRentSelect = document.querySelector("#precio-hasta-rentar");
+const searchBtn = document.querySelector("#buscar-btn");
+const clearSearchBtn = document.querySelector("#borrar-btn");
+const propertiesContainer = document.querySelector(".properties-container");
+
+// Función para mostrar las propiedades inmobiliarias en el DOM
+function showProperties(properties){
+    // Limipiar el contenido actual
+    propertiesContainer.innerHTML = "";
+
+    // Verificar si el arreglo de objetos está vacío
+    if(properties === 0){
+        propertiesContainer.innerHTML = "<p class='noResults'>Lo sentimos, por el momento no tenemos propiedades que coincidan con su búsqueda.</p>"
+    } else {
+        // Iterar cada objeto y crear un elemento HTML para mostrar las propiedades
+        properties.forEach((property)=>{
+            const propertyElement = document.createElement("div")
+            propertyElement.classList.add("property");
+
+            // Agregar estructura HTML con la información de las propiedades inmobiliarias
+            propertyElement.innerHTML = `
+            <a href="#">
+                <img src="${property.imagen}" alt ="">
+            </a>
+            <br>
+            <a href= "#"><b>${property.titulo}</b></a>
+            <p>${property.caracteristicas}</p>
+            <p>${property.precio}</p>
+            `;
+
+            // Agregar elementos al contenedor de resultados
+            propertiesContainer.appendChild(propertyElement);
+        });
+    }
+}
+
+showProperties(properties);
+
+// Función para filtrar las propiedades según los criterios seleccionados
+function filterProperties(){
+    const propertyType = propertyTypeSelect.value;
+    const operationType = operationTypeSelect.value;
+    let minPrice;
+    let maxPrice;
+
+    // Asignar valores a los precios dependiendo del tipo de operación seleccionado
+    if(operationType === "comprar"){
+        minPrice = parseInt(minPriceBuySelect.value);
+        maxPrice = parseInt(maxPriceBuySelect.value);
+    } else if(operationType === "rentar"){
+        minPrice = parseInt(minPriceRentSelect.value);
+        maxPrice = parseInt(maxPriceRentSelect.value);
+    }
+
+    // Filtrar las propiedades inmobiliarias según los criterios definidos
+    const filteredProperties = properties.filter((property)=>{
+        if(propertyType && property.tipo !== propertyType){
+            return false; // No cumple con el tipo de propiedad inmobiliaria seleccionado
+        }
+
+        if(operationType && property.operacion !== operationType){
+            return false; // No cumple con el tipo de operación seleccionado
+        }
+
+        if((operationType === "comprar" && (minPrice && property.precio < minPrice)) || (operationType === "comprar" && (maxPrice && property.precio > maxPrice))){
+            return false; // No cumple con los precios mínimos o máximos de compra
+        }
+
+        if((operationType === "rentar" && (minPrice && property.precio < minPrice)) || (operationType === "rentar" && (maxPrice && property.precio > maxPrice))){
+            return false; // No cumple con los precios mínimos o máximos de compra
+        }
+
+        return true; // Cumple con todos lkos criterios de filtrado
+    });
+    
+}
+
+// Ocultar y deshabilitar los selectores de precios de renta
+minPriceRentSelect.style.display = "none"; // Ocultar la lista de precios mínimos de renta
+maxPriceRentSelect.style.display = "none"; // Ocultar la lista de precios mínimos de renta
+minPriceRentSelect.disabled = "true"; // Deshabilitar la lista de precios mínimos de renta
+maxPriceRentSelect.disabled = "true"; // Deshabilitar la lista de precios mínimos de renta
+
+// Configurar el comportamiento de los selectores al cambiar el tipo de operación
+operationTypeSelect.addEventListener("change", ()=>{
+    // Si el tipo de operación es "Rentar", mostrar las listas de precios de renta
+    if(operationTypeSelect.value === "rentar"){
+        minPriceBuySelect.style.display = "none";
+        maxPriceBuySelect.style.display = "none";
+        minPriceRentSelect.style.display = "block";
+        maxPriceRentSelect.style.display = "block";
+        minPriceRentSelect.disabled = "false";
+        maxPriceRentSelect.disabled = "false";
+        minPriceBuySelect.selectedIndex = 0; // Reiniciar la selección del precio mínimo de compra
+        maxPriceBuySelect.selectedIndex = 0; // Reiniciar la selección del precio máximo de compra
+    } else {
+        minPriceBuySelect.style.display = "block";
+        maxPriceBuySelect.style.display = "block";
+        minPriceRentSelect.style.display = "none";
+        maxPriceRentSelect.style.display = "none";
+        minPriceRentSelect.disabled = "true";
+        maxPriceRentSelect.disabled = "true";
+        minPriceRentSelect.selectedIndex = 0; // Reiniciar la selección del precio mínimo de renta
+        maxPriceRentSelect.selectedIndex = 0; // Reiniciar la selección del precio máximo de renta
+    }
+});
+
+// Asociar la función de filtrado al botón "Buscar"
+searchBtn.addEventListener("click", filterProperties);
